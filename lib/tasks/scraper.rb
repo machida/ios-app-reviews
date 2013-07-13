@@ -50,6 +50,16 @@ class Tasks::Scraping
     end
   end
 
+  def self.test_feed
+    agent = make_agent
+    feed_url = ''       # test時に記述
+    finder = -> page {} # test時に記述
+    Feedzirra.Feed.fetch_and_parse(feed_url).entries.map(&:map).each do |entry_url|
+      appcodes = appcodes_of entry_url, finder, agent
+      puts appcodes
+    end
+  end
+
   private
     def self.make_agent
       agent = Mechanize.new
