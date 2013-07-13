@@ -6,6 +6,7 @@ class Tasks::Scraping
       puts "start: (code: #{reviewer.code}) #{reviewer.name}"
       affiliate_urls_finder = make_finder_for reviewer
 
+      # TODO: feed_urlが変わった||間違っている場合の処理
       Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries.map(&:url).each do |entry_url|
         return if Review.where(url: entry_url).present?
 
@@ -50,11 +51,14 @@ class Tasks::Scraping
     end
   end
 
-  def self.test_feed
+  def self.test_feed reviewer_code
+    reviewer = Reviewer.where(code: reviewer_code).first
+    raise "reviewer not found by code: #{reviewer_code}" if reviewer.blank?
+
     agent = make_agent
-    feed_url = ''       # test時に記述
-    finder = -> page {} # test時に記述
-    Feedzirra.Feed.fetch_and_parse(feed_url).entries.map(&:map).each do |entry_url|
+    finder = make_finder_for reviewer
+    Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries.map(&:url).each do |entry_url|
+      puts entry_url
       appcodes = appcodes_of entry_url, finder, agent
       puts appcodes
     end
@@ -70,8 +74,16 @@ class Tasks::Scraping
 
     def self.make_finder_for reviewer
       case reviewer.code
-      when 1 then
-        -> page {page.search('img[src="http://img.blog.appbank.net/appdl.png"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+      when 1 then # AppBank
+        -> page {page./('img[src="http://img.blog.appbank.net/appdl.png"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+      when 2 then # AppLibrary
+        -> page {page./('img[src="http://app-library.com/wp-content/uploads/2013/01/download2.png"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+      when 3 then # 男子ハック
+        -> page {page./('img[src="http://www.danshihack.com/wordpress_r/wp-content/uploads/2013/02/AppDownloadButton-2.jpg"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+      when 4 then # あぷまがどっとねっと
+        -> page {page./('a[href^="http://click.linksynergy.com/"]').map{|e| e.attribute('href').to_s}}
+      when 5 then # アップス！
+        -> page {page./('img[src="http://www.appps.jp/APPSTORE01.jpg"]').map{|e| e.search('..')[0].attribute('href').to_s}}
       else
         raise "finder for #{reviewer.name} is not implemented."
       end
@@ -81,18 +93,27 @@ class Tasks::Scraping
       not url.match(/^https:\/\/itunes.apple.com/).nil?
     end
 
+    def self.extract_appcode url
+      itunes_url?(url) ? url.match(/id\d{9}/)[0].gsub(/id/, '').to_i : nil
+    end
+
     def self.appcodes_of url, finder, agent
-      finder.call(agent.get url).map{|affiliate_url|
-        agent.get affiliate_url
-        url = agent.page.uri.to_s
-
-        3.times do
-          break if itunes_url? url
-          agent.get url
+      finder.call(agent.get url).uniq.map{|affiliate_url|
+        begin
+          agent.get affiliate_url
           url = agent.page.uri.to_s
-        end
 
-        itunes_url?(url) ? url.match(/id\d{9}/)[0].gsub(/id/, '').to_i : nil
+          3.times do
+            break if itunes_url? url
+            agent.get url
+            url = agent.page.uri.to_s
+          end
+
+        rescue Mechanize::ResponseCodeError => e
+          extract_appcode e.page.uri.to_s
+        else
+          extract_appcode url
+        end
       }.uniq.delete_if(&:nil?)
     end
 end
