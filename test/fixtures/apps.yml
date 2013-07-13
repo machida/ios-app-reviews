@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  code: 1
+  name: MyString
+  url: MyString
+  price: 1
+  formatted_price: 1
+  rating: 9.99
+  version: MyString
+  description: MyText
+  artwork60_url: MyString
+  artwork100_url: MyString
+  artwork512_url: MyString
+  developer_id: 
+  primary_category_id: 
+
+two:
+  code: 1
+  name: MyString
+  url: MyString
+  price: 1
+  formatted_price: 1
+  rating: 9.99
+  version: MyString
+  description: MyText
+  artwork60_url: MyString
+  artwork100_url: MyString
+  artwork512_url: MyString
+  developer_id: 
+  primary_category_id: 
