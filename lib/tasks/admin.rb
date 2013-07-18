@@ -1,10 +1,10 @@
 class Tasks::Admin
   def self.create_reviewer
     Reviewer.create({
-      code: ENV['code'].to_i,
-      name: ENV['name'],
-      url: ENV['url'],
-      feed_url: ENV['feed_url']
+      code: ENV['CODE'].to_i,
+      name: ENV['NAME'],
+      url: ENV['URL'],
+      feed_url: ENV['FEED_URL']
     })
   end
 end
