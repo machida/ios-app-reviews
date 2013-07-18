@@ -75,15 +75,35 @@ class Tasks::Scraping
     def self.make_finder_for reviewer
       case reviewer.code
       when 1 then # AppBank
-        -> page {page./('img[src="http://img.blog.appbank.net/appdl.png"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+        -> page {page./('img[src="http://img.blog.appbank.net/appdl.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 2 then # AppLibrary
-        -> page {page./('img[src="http://app-library.com/wp-content/uploads/2013/01/download2.png"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+        -> page {page./('img[src="http://app-library.com/wp-content/uploads/2013/01/download2.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 3 then # 男子ハック
-        -> page {page./('img[src="http://www.danshihack.com/wordpress_r/wp-content/uploads/2013/02/AppDownloadButton-2.jpg"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+        -> page {page./('img[src="http://www.danshihack.com/wordpress_r/wp-content/uploads/2013/02/AppDownloadButton-2.jpg"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 4 then # あぷまがどっとねっと
         -> page {page./('a[href^="http://click.linksynergy.com/"]').map{|e| e.attribute('href').to_s}}
       when 5 then # アップス！
-        -> page {page./('img[src="http://www.appps.jp/APPSTORE01.jpg"]').map{|e| e.search('..')[0].attribute('href').to_s}}
+        -> page {page./('img[src="http://www.appps.jp/APPSTORE01.jpg"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 6 then # AppleFan
+        -> page {page./('img[src^="http://www.applefan2.com/wp-content/uploads/2010/06/itunes_button"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 7 then # App Woman
+        -> page {page./('#ilink').map{|e| e.attribute('href').to_s}}
+      when 8 then # iPhone女子部
+        -> page {page./('img[src="http://www.iphonejoshibu.com/wp-content/uploads/2013/04/banner_appstore113.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 9 then # Girl's App
+        -> page {page./('img[src="/img/btn_go_itunes_big_01.gif"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 10 then # iPhone女史
+        -> page {page./('img[src="http://www.iphone-girl.jp/wp-content/themes/iphone_joshi_new/img/page/post_btn_app.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 11 then # Ketchapp!
+        -> page {page./('.button_iphone').map{|e| e.attribute('href').to_s}}
+      when 12 then # iStation
+        -> page {page./('img[src="/image/appBtn.jpg"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 13 then # キッズアプリCOM
+        -> page {page./('img[src="http://www.kids-app.com/image/itunes_store_check_red.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 14 then # RainbowApps
+        -> page {page./('img[src="http://blog.rainbowapps.com/wp-content/uploads/2010/12/download.png"]').map{|e| e./('..')[0].attribute('href').to_s}}
+      when 15 then # Touch Lab
+        -> page {page./('a[href^="http://click.linksynergy.com/"]').map{|e| e.attribute('href').to_s}}
       else
         raise "finder for #{reviewer.name} is not implemented."
       end

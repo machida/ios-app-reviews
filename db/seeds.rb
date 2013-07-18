@@ -1,7 +1,17 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Reviewer.create([
+  {code: '1', name: 'AppBank', url: 'http://www.appbank.net/', feed_url: 'http://www.appbank.net/feed'},
+  {code: '2', name: 'AppLibrary', url: 'http://app-library.com/', feed_url: 'http://app-library.com/feed?post_type=post'},
+  {code: '3', name: '男子ハック', url: 'http://www.danshihack.com/category/iphone_app', feed_url: 'http://www.danshihack.com/category/iphone_app/feed'},
+  {code: '4', name: 'あぷまがどっとねっと', url: 'http://appmaga.net/', feed_url: 'http://appmaga.net/feed'},
+  {code: '5', name: 'アップス！', url: 'http://www.appps.jp/', feed_url: 'http://www.appps.jp/index.rdf'},
+  {code: '6', name: 'AppleFan', url: 'http://www.applefan2.com/', feed_url: 'http://www.applefan2.com/feed'},
+  {code: '7', name: 'App Woman', url: 'http://appwoman.jp/', feed_url: 'http://appwoman.jp/feed'},
+  {code: '8', name: 'iPhone女子部', url: 'http://www.iphonejoshibu.com/', feed_url: 'http://www.iphonejoshibu.com/apps/feed/'},
+  {code: '9', name: "Girl's App", url: 'http://girlsapp.jp/', feed_url: 'http://girlsapp.jp/archives/category/review/feed/'},
+  {code: '10', name: 'iPhone女史', url: 'http://www.iphone-girl.jp/', feed_url: 'http://www.iphone-girl.jp/application-review/feed/'},
+  {code: '11', name: 'Ketchapp', url: 'http://ketchapp.jp/', feed_url: 'http://ketchapp.jp/app/ip/feed/'},
+  {code: '12', name: 'iStation', url: 'http://iphones.cx/', feed_url: 'http://iphones.cx/atom.xml'},
+  {code: '13', name: 'キッズアプリCOM', url: 'http://www.kids-app.com/', feed_url: 'http://www.kids-app.com/feed'},
+  {code: '14', name: 'RainbowApps', url: 'http://blog.rainbowapps.com/', feed_url: 'http://feeds.feedburner.com/rainbowappsblog'},
+  {code: '15', name: 'Touch Lab', url: 'http://touchlab.jp/', feed_url: 'http://feeds2.feedburner.com/ipod_touch_lab'},
+])
