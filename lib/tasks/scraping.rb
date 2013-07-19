@@ -94,7 +94,7 @@ class Tasks::Scraping
       when 4 then # あぷまがどっとねっと
         -> page {page./('a[href^="http://click.linksynergy.com/"] > img[src*="phobos.apple.com/"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 5 then # アップス！
-        -> page {page./('img[src="http://www.appps.jp/APPSTORE01.jpg"]').map{|e| e./('..')[0].attribute('href').to_s}}
+        -> page {page./('a[href^="http://click.linksynergy.com/"] > img[src*="phobos.apple.com/"], a[href^="https://itunes.apple.com/"] > img[src*="phobos.apple.com/"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 6 then # AppleFan
         -> page {page./('img[src^="http://www.applefan2.com/wp-content/uploads/2010/06/itunes_button"]').map{|e| e./('..')[0].attribute('href').to_s}}
       when 7 then # App Woman
