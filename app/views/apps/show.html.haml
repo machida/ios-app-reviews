@@ -1,0 +1,13 @@
+#app
+  .artwork= image_tag @app.artwork60_url, alt: "#{@app.name}"
+  .name= link_to @app.name, @app.url
+  .category= @app.primary_category.name
+  .price= @app.formatted_price
+  .rating= @app.rating
+  .developer= @app.developer.name
+  .description= @app.description
+
+= "レビュー(#{@app.reviews.count}件)"
+%ul#reviews
+  - @app.reviews.each do |r|
+    %li.review= link_to r.title, r.url

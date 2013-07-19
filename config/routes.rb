@@ -4,5 +4,6 @@ IosAppReviews::Application.routes.draw do
     get 'reviews' => 'reviews#by_reviewer'
   end
   resources :reviews, only: [:index, :show]
+  resources :apps, only: [:index, :show]
 
 end

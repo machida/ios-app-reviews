@@ -1,0 +1,5 @@
+.artwork= image_tag app.artwork60_url, alt: "#{app.name}"
+.name= link_to app.name, app_path(app)
+.category= app.primary_category.name
+.price= app.formatted_price
+.rating= app.rating

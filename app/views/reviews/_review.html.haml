@@ -4,5 +4,4 @@
 - if apps.present?
   %ul#apps
     - apps.each do |a|
-      - #%li.app= render 'apps/app', app: a
-      %li.app= a.name
+      %li.app= render 'apps/app', app: a
