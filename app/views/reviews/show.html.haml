@@ -1,0 +1,6 @@
+= link_to @review.title, @review.url
+
+%ul#apps
+  - @review.apps.each do |a|
+    - # %li.app= render 'apps/app', review: a
+    %li.app= a.name

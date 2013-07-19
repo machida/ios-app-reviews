@@ -1,0 +1,8 @@
+.title= link_to review.title, review_path(review)
+
+- apps = review.apps
+- if apps.present?
+  %ul#apps
+    - apps.each do |a|
+      - #%li.app= render 'apps/app', app: a
+      %li.app= a.name

@@ -2,4 +2,4 @@
 
 %ul#reviews
   - @reviewer.reviews.each do |r|
-    %li.review= 'test' #render 'reviews/review', review: r
+    %li.review= render 'reviews/review', review: r

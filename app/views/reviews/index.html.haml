@@ -1,0 +1,3 @@
+%ul#reviews
+  - @reviews.each do |r|
+    %li.review= render 'review', review: r
