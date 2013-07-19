@@ -12,11 +12,11 @@ one:
   artwork60_url: MyString
   artwork100_url: MyString
   artwork512_url: MyString
-  developer_id: 
-  primary_category_id: 
+  developer_id: 1
+  primary_category_id: 1
 
 two:
-  code: 1
+  code: 2
   name: MyString
   url: MyString
   price: 1
@@ -27,5 +27,5 @@ two:
   artwork60_url: MyString
   artwork100_url: MyString
   artwork512_url: MyString
-  developer_id: 
-  primary_category_id: 
+  developer_id: 1
+  primary_category_id: 1

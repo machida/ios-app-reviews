@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  app_id: 
-  review_id: 
+  app_id: 1
+  review_id: 1
 
 two:
-  app_id: 
-  review_id: 
+  app_id: 2
+  review_id: 2

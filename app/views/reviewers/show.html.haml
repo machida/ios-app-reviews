@@ -1,0 +1,5 @@
+= link_to @reviewer.name, @reviewer.url
+
+%ul#reviews
+  - @reviewer.reviews.each do |r|
+    %li.review= 'test' #render 'reviews/review', review: r

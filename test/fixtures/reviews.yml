@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  reviewer_id: 
+  reviewer_id: 1
   title: MyString
   url: MyString
 
 two:
-  reviewer_id: 
+  reviewer_id: 2
   title: MyString
   url: MyString
