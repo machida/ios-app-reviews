@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130718065946) do
+ActiveRecord::Schema.define(version: 20130719113914) do
 
   create_table "app_categories", force: true do |t|
     t.integer  "app_id",      null: false
@@ -34,21 +34,21 @@ ActiveRecord::Schema.define(version: 20130718065946) do
   add_index "app_reviews", ["review_id"], name: "index_app_reviews_on_review_id"
 
   create_table "apps", force: true do |t|
-    t.integer  "code",                null: false
-    t.string   "name",                null: false
-    t.string   "url",                 null: false
-    t.integer  "price",               null: false
-    t.integer  "formatted_price",     null: false
-    t.decimal  "rating",              null: false
-    t.string   "version",             null: false
-    t.text     "description",         null: false
-    t.string   "artwork60_url",       null: false
-    t.string   "artwork100_url",      null: false
-    t.string   "artwork512_url",      null: false
-    t.integer  "developer_id",        null: false
-    t.integer  "primary_category_id", null: false
+    t.integer  "code",                             null: false
+    t.string   "name",                             null: false
+    t.string   "url",                              null: false
+    t.integer  "price",                            null: false
+    t.decimal  "rating",                           null: false
+    t.string   "version",                          null: false
+    t.text     "description",                      null: false
+    t.string   "artwork60_url",                    null: false
+    t.string   "artwork100_url",                   null: false
+    t.string   "artwork512_url",                   null: false
+    t.integer  "developer_id",                     null: false
+    t.integer  "primary_category_id",              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "formatted_price",     default: "", null: false
   end
 
   add_index "apps", ["developer_id"], name: "index_apps_on_developer_id"
