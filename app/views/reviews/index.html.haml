@@ -1,3 +1,21 @@
 %ul#reviews
-  - @reviews.each do |r|
-    %li.review= render 'review', review: r
+  - @reviews.each do |review|
+    %li.review
+      .reviewer= link_to review.reviewer.name, reviewer_path(review.reviewer)
+      .title= link_to review.title, review.url
+      - next if review.apps.blank?
+      %ul.apps
+        = t('apps')
+        - app = review.apps[0]
+        %li.app
+          .artwork= image_tag app.artwork60_url, alt: "#{app.name}"
+          .name= link_to app.name, app.url
+          .rating
+            - app.rating.to_i.times do
+              %span.rating-star
+            - if (app.rating * 10).to_i % 10 > 0
+              %span.rating-star.half
+          .price= app.formatted_price
+          .category= app.primary_category.name
+        - if review.apps[1].present?
+          .see_all= t('see_all')

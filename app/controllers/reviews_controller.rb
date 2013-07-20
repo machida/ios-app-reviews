@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   def index
-    @reviews = Review.all.order('id DESC')
+    @reviews = Review.all.includes(:reviewer, apps: :primary_category).order('id DESC')
   end
 
   def show
