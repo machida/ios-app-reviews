@@ -8,20 +8,20 @@ class Tasks::Scraping
 
       entries = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries
       break if entries.blank?
-      entries.map(&:url).each do |entry_url|
+      entries.map{|e| [e.url, e.title]}.each do |entry_url, entry_title|
         next if Review.where(url: entry_url).present?
         agent.get entry_url
         entry_url = agent.page.uri.to_s
         next if Review.where(url: entry_url).present?
 
-        puts "start: #{entry_url}"
+        puts "start: #{entry_title}: #{entry_url}"
         begin
           appcodes = appcodes_of entry_url, affiliate_urls_finder, agent
 
           agent.get entry_url
           # Review, Categories, Developer, App, AppCategories, AppReviewを登録, 更新
           ActiveRecord::Base.transaction do # TODO: 例外発生時にメール等して処理を続ける
-            review = Review.create reviewer_id: reviewer.id, title: agent.page.title, url: agent.page.uri.to_s
+            review = Review.create reviewer_id: reviewer.id, title: entry_title, url: agent.page.uri.to_s # リダイレクタ経由を考慮
 
             appcodes.each do |appcode|
               itunes_res = ITunesSearchAPI.lookup id: appcode, country: 'JP'
@@ -68,8 +68,8 @@ class Tasks::Scraping
     finder = make_finder_for reviewer
     entries = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries
     return if entries.blank?
-    entries.map(&:url).each do |entry_url|
-      puts entry_url
+    entries.map{|e| [e.url, e.title]}.each do |entry_url, entry_title|
+      puts "start: #{entry_title}: #{entry_url}"
       appcodes = appcodes_of entry_url, finder, agent
       puts appcodes
     end
