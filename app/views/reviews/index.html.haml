@@ -5,7 +5,7 @@
       .title= link_to review.title, review.url
       - next if review.apps.blank?
       %ul.apps
-        = t('apps')
+        = t('reviews.apps')
         - app = review.apps[0]
         %li.app
           .artwork= image_tag app.artwork60_url, alt: "#{app.name}"
@@ -18,4 +18,7 @@
           .price= app.formatted_price
           .category= app.primary_category.name
         - if review.apps[1].present?
-          .see_all= t('see_all')
+          .see_all= t('reviews.see_all')
+
+= link_to_previous_page @reviews, t('prev_page')
+= link_to_next_page @reviews, t('next_page')

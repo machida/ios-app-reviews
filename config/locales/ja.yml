@@ -1,3 +1,6 @@
 ja:
-  apps: 'アプリ'
-  see_all: '全て見る'
+  prev_page: 前へ
+  next_page: 次へ
+  reviews:
+    apps: アプリ
+    see_all: 全て見る

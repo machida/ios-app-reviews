@@ -13,6 +13,7 @@ gem 'haml-rails'
 gem 'mechanize'
 gem 'feedzirra'
 gem 'itunes-search-api'
+gem 'kaminari'
 
 group :doc do
   gem 'sdoc', require: false
