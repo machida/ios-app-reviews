@@ -10,14 +10,18 @@ class Tasks::Scraping
       entries = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries
       break if entries.blank?
       entries.map{|e| [e.url, e.title, e.published]}.each do |entry_url, entry_title, entry_published_at|
-        next if Review.where(url: entry_url).present?
+        break if Review.where(url: entry_url).present?
         agent.get entry_url
         entry_url = agent.page.uri.to_s
-        next if Review.where(url: entry_url).present?
+        break if Review.where(url: entry_url).present?
 
         puts "start: #{entry_title}: #{entry_url}"
         begin
           appcodes = appcodes_of entry_url, affiliate_urls_finder, agent
+          if appcodes.blank?
+            puts 'no apps'
+            next
+          end
 
           agent.get entry_url
           # Review, Categories, Developer, App, AppCategories, AppReviewを登録, 更新
