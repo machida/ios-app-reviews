@@ -15,6 +15,7 @@ class App < ActiveRecord::Base
       formatted_price:  itunes_res['formattedPrice'],
       rating:           itunes_res['averageUserRatingForCurrentVersion'] || 0,
       version:          itunes_res['version'],
+      size_mb:          (itunes_res['fileSizeBytes'].to_i / 1000.0 / 1000.0).round(1),
       description:      itunes_res['description'],
       artwork60_url:    itunes_res['artworkUrl60'],
       artwork100_url:   itunes_res['artworkUrl100'],
