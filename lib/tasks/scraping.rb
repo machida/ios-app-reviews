@@ -1,6 +1,7 @@
 class Tasks::Scraping
   def self.all_feeds!
     agent = make_agent
+    started_at = DateTime.now
 
     Reviewer.all.each do |reviewer|
       puts "start: (code: #{reviewer.code}) #{reviewer.name}"
@@ -8,7 +9,7 @@ class Tasks::Scraping
 
       entries = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries
       break if entries.blank?
-      entries.map{|e| [e.url, e.title]}.each do |entry_url, entry_title|
+      entries.map{|e| [e.url, e.title, e.published]}.each do |entry_url, entry_title, entry_published_at|
         next if Review.where(url: entry_url).present?
         agent.get entry_url
         entry_url = agent.page.uri.to_s
@@ -21,7 +22,12 @@ class Tasks::Scraping
           agent.get entry_url
           # Review, Categories, Developer, App, AppCategories, AppReviewを登録, 更新
           ActiveRecord::Base.transaction do # TODO: 例外発生時にメール等して処理を続ける
-            review = Review.create reviewer_id: reviewer.id, title: entry_title, url: agent.page.uri.to_s # リダイレクタ経由を考慮
+            review = Review.create(
+              reviewer_id: reviewer.id,
+              title: entry_title,
+              url: agent.page.uri.to_s, # リダイレクタ経由を考慮
+              published_at: entry_published_at || started_at
+            )
 
             appcodes.each do |appcode|
               itunes_res = ITunesSearchAPI.lookup id: appcode, country: 'JP'

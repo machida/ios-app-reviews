@@ -2,6 +2,7 @@
   - @reviews.each do |review|
     %li.review
       .reviewer= link_to review.reviewer.name, reviewer_path(review.reviewer)
+      .published= review.published_at.to_date
       .title= link_to review.title, review.url
       - next if review.apps.blank?
       %ul.apps
