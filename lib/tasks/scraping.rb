@@ -7,9 +7,9 @@ class Tasks::Scraping
       puts "start: (code: #{reviewer.code}) #{reviewer.name}"
       affiliate_urls_finder = make_finder_for reviewer
 
-      entries = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url).entries
-      break if entries.blank? or entries.instance_of?(Fixnum)
-      entries.map{|e| [e.url, e.title, e.published]}.each do |entry_url, entry_title, entry_published_at|
+      fetch_res = Feedzirra::Feed.fetch_and_parse(reviewer.feed_url)
+      next if fetch_res.instance_of?(Fixnum)
+      fetch_res.entries.map{|e| [e.url, e.title, e.published]}.each do |entry_url, entry_title, entry_published_at|
         break if Review.where(url: entry_url).present?
         agent.get entry_url
         entry_url = agent.page.uri.to_s
@@ -64,7 +64,9 @@ class Tasks::Scraping
             end
           end
         rescue => e
-          puts "error has occured: #{e}. skipped."
+          puts "error: #{e}"
+          puts e.inspect
+          puts e.backtrace
         end
       end
     end
@@ -135,7 +137,12 @@ class Tasks::Scraping
     end
 
     def self.extract_appcode url
-      itunes_url?(url) ? url.match(/id\d{9}/)[0].gsub(/id/, '').to_i : nil
+      if itunes_url?(url)
+        m = url.match(/id\d{9}/)
+        m.nil? ? nil : m[0].gsub(/id/, '').to_i
+      else
+        nil
+      end
     end
 
     def self.appcodes_of url, finder, agent
