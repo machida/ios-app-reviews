@@ -14,6 +14,7 @@ gem 'mechanize'
 gem 'feedzirra'
 gem 'itunes-search-api'
 gem 'kaminari'
+gem 'compass-rails', github: "milgner/compass-rails", branch: "rails4"
 
 group :doc do
   gem 'sdoc', require: false

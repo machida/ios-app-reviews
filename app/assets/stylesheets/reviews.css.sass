@@ -1,3 +1,65 @@
+$font_base: #34495e
+
+body
+  color: $font_base
+
+ul
+  list-style-type: none
+
+a
+  color: $font_base
+  text-decoration: none
+
+.review
+  margin: 30px 15px
+  .reviewer
+    font-size: 12px
+  .published
+    float: right
+    font-size: 12px
+    margin-top: 3px
+  .title
+    margin-top: 5px
+    font-size: 16px
+    @include ellipsis()
+  .apps
+    padding: 0
+
+.app
+  margin: 10px 0
+  overflow: hidden
+  .artwork
+    float: left
+    margin-right: 5px
+    img
+      width: 60px
+      height: 60px
+      @include border-radius(10px)
+  .name
+    font-size: 14px
+    @include ellipsis()
+  .price
+    font-size: 12px
+    margin-top: 4px
+  .category
+    font-size: 12px
+    margin-top: 4px
+  .app-store
+    font-size: 16px
+    float: right
+    margin: 10px 4px 0 0
+    padding: 9px 10px
+    background-color: #1abc9c
+    @include border-radius(5px)
+    a
+      color: #ffffff
+      // font-weight: bold
+
+
+.rating
+  overflow: hidden
+  margin-top: 2px
+
 .rating-star
   display: block
   float: left
@@ -9,3 +71,4 @@
 .rating-star.half
   width: 6px
   background: url(/rating_star_half.png) 0 0 no-repeat
+
